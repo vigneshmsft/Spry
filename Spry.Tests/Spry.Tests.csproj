@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{46AD06AC-F969-4402-8881-41C80607E756}</ProjectGuid>
+    <ProjectGuid>{39014A12-1D04-4129-A0BE-A61B06F809AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Spry</RootNamespace>
-    <AssemblyName>Spry</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Spry.Tests</RootNamespace>
+    <AssemblyName>Spry.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,44 +29,23 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.35.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.35\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBuilder.cs" />
-    <Compile Include="IExecutable.cs" />
-    <Compile Include="Insert\SpryInsert.cs" />
-    <Compile Include="Insert\InsertValue.cs" />
-    <Compile Include="Insert\SpryInsertTable.cs" />
-    <Compile Include="Select\SprySelect.cs" />
-    <Compile Include="Select\SprySelectTable.cs" />
-    <Compile Include="SpryParameter.cs" />
-    <Compile Include="Table\SpryTable.cs" />
-    <Compile Include="Select\SprySelectColumn.cs" />
-    <Compile Include="Spry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpryExpression.cs" />
-    <Compile Include="SqlExecutor.cs" />
-    <Compile Include="Table\InnerJoin.cs" />
-    <Compile Include="Update\SpryUpdate.cs" />
-    <Compile Include="Update\SpryUpdateTable.cs" />
-    <Compile Include="Update\UpdateValue.cs" />
-    <Compile Include="Where\Where.cs" />
+    <Compile Include="SelectTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

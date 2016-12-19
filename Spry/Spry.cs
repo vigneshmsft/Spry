@@ -1,90 +1,39 @@
-﻿namespace Spry
+﻿using Spry.Insert;
+using Spry.Select;
+using Spry.Update;
+
+namespace Spry
 {
-    using System;
-    using System.Text;
-
-    public abstract class Spry
+    public static class Spry
     {
-        internal Spry() { }
-
-        protected readonly StringBuilder Builder = new StringBuilder();
-
-        protected readonly StringBuilder WhereBuilder = new StringBuilder();
-
-        public static SpryColumn<TDtoType> Select<TDtoType>()
+        public static SprySelectColumn<TDto> Select<TDto>()
         {
-            var spry = new Select();
-            spry.Builder.AppendLine("SELECT");
-            return new SpryColumn<TDtoType>(spry);
+            return SprySelect<TDto>.Select();
         }
 
-        public static SpryColumn<dynamic> Select()
+        public static SprySelectColumn<dynamic> Select()
         {
-            var spry = new Select();
-            spry.Builder.AppendLine("SELECT");
-            return new SpryColumn<dynamic>(spry);
+            return SprySelect<dynamic>.Select();
         }
 
-        public static SpryInsertColumn<TDtoType> Insert<TDtoType>()
+        public static InsertValue<TDto> InsertInto<TDto>(string tableName, string dbSchema = "dbo")
         {
-            var spry = new Insert();
-            spry.Builder.Append("INSERT");
-            return new SpryInsertColumn<TDtoType>(spry);
+            return SpryInsert<TDto>.Insert(tableName, dbSchema);
         }
 
-        public static SpryInsertColumn<dynamic> Insert()
+        public static InsertValue<dynamic> InsertInto(string tableName, string dbSchema = "dbo")
         {
-            var spry = new Insert();
-            spry.Builder.Append("INSERT");
-            return new SpryInsertColumn<dynamic>(spry);
+            return SpryInsert<dynamic>.Insert(tableName, dbSchema);
         }
 
-        public static SpryUpdateColumn<TDtoType> Update<TDtoType>()
+        public static UpdateValue<TDto> Update<TDto>(string tableName, string dbSchema = "dbo")
         {
-            var spry = new Update();
-            spry.Builder.Append("UPDATE");
-            return new SpryUpdateColumn<TDtoType>(spry);
+            return SpryUpdate<TDto>.Update(tableName, dbSchema);
         }
 
-        public static SpryUpdateColumn<dynamic> Update()
+        public static UpdateValue<dynamic> Update(string tableName, string dbSchema = "dbo")
         {
-            var spry = new Update();
-            spry.Builder.Append("UPDATE");
-            return new SpryUpdateColumn<dynamic>(spry);
-        }
-
-        internal virtual void AppendColumn(string columnName)
-        {
-            Builder.AppendLine(columnName + ",");
-        }
-
-        internal virtual string BuildQuery()
-        {
-            var query = Builder.ToString();
-
-            return query + WhereBuilder;
-        }
-
-        internal abstract void UseTable(string tableName, string schema = "dbo", string tableAlias = null);
-
-        internal virtual void Append(string text)
-        {
-            Builder.Append(text);
-        }
-
-        internal virtual void AppendLine(string text)
-        {
-            Builder.AppendLine(text);
-        }
-
-        internal void AppendCondition(string text)
-        {
-            WhereBuilder.Append(text);
-        }
-
-        protected void RemoveTrailingComma(StringBuilder builder)
-        {
-            builder.Length -= Environment.NewLine.Length + 1;
+            return SpryUpdate<dynamic>.Update(tableName, dbSchema);
         }
     }
 }

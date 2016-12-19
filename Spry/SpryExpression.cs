@@ -22,7 +22,7 @@
             return memberExpression.Member.Name;
         }
 
-        internal static string GetColumnValue<TDtoType, TProperty>(Expression<Func<TDtoType, TProperty>> columnExpression)
+        internal static object GetColumnValue<TDtoType, TProperty>(Expression<Func<TDtoType, TProperty>> columnExpression)
         {
             Expression memberExpression = columnExpression.Body as MemberExpression;
 
@@ -40,9 +40,7 @@
 
             var valueFunc = Expression.Lambda<Func<TProperty>>(valueExpression).Compile();
 
-            var valueString = (string)Convert.ChangeType(valueFunc(), typeof(string));
-
-            return valueString != null ? "'" + valueString + "'" : "NULL";
+            return valueFunc();
         }
     }
 }

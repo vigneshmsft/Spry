@@ -1,9 +1,9 @@
-﻿namespace Spry
-{
-    using System.Collections.Generic;
-    using System.Data;
-    using Dapper;
+﻿using System.Collections.Generic;
+using System.Data;
+using Dapper;
 
+namespace Spry
+{
     public class SqlExecutor : IExecutable
     {
         private readonly string _query;

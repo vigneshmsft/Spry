@@ -6,58 +6,28 @@
     {
         public static void Main(string[] args)
         {
-            //var myquery = Spry.Select<MyDto>()
-            //    .Column(_ => "EvidenceStatusId")
-            //    .Column(_ => _.Name)
-            //    .From("MyTable", "MT")
-            //    .In("Review")
-            //    .InnerJoin("MylookupTable")
-            //    .On("a", "b")
-            //    .GetQuery();
+            var myDto = new MyDto { Id = 1, IsDeleted = true };
 
-            var myquery = Spry.Select().Column("EvidenceStatusId").From("ExpenditureEvidence").Where("ExpenditureId = @expenditureId");
+            Spry.Select<MyDto>().Column(_ => myDto.Id).Column(_ => myDto.IsDeleted).From("tt")
+                .InnerJoin("table2", "audit").On("c1", "d1")
+                .InnerJoin("table3", "audit").On("c2", "d2")
+                .InnerJoin("table4", "audit").On("c4", "d2")
+                .InSchema("review")
+                .Where(_ => myDto.Id).EqualTo(1)
+                .AndWhere(_ => myDto.Id).InBetween(1, 10)
+                .AndWhere(_ => myDto.Id).GreaterThan(5)
+                .Build();
 
-            int? nullable = 0;
-            var myDto = new MyDto() { Id = 1,  IsDeleted = true };
+            Spry.InsertInto("tableOne", "review")
+                .Value("One", 1)
+                .Value(_ => myDto.Id)
+                .OutputIdentity()
+                .Execute(null);
 
-            var myquery2 = Spry.Insert()
-                                .Column(_ => nullable)
-                                .Column(_ => myDto.Name)
-                                .Column(_ => myDto.Today)
-                                .Into("MyTable")
-                               .GetQuery();
-
-            var myquery3 = Spry.Update<MyDto>()
-                               .Set(_ => myDto.IsDeleted)
-                               .In("MyTable").In("Review").Where("WHERE 1 = 1").GetQuery();
-
-            DateTime now = DateTime.Now;
-
-            DateTime ModifiedOn = now;
-            DateTime CreatedOn = now;
-            int ModifiedBy = 0;
-            int expenditureId = 1;
-            EvidenceStatus status = EvidenceStatus.Awaiting;
-            int evidenceStatusId = (int)status;
-            var q4 = Spry.Insert()
-                .Column(_ => expenditureId)
-                .Column(_ => evidenceStatusId)
-                .Column(_ => CreatedOn)
-                .Column(_ => ModifiedOn)
-                .Column(_ => CreatedOn)
-                .Into("ExpenditureEvidence").GetQuery();
-
-            Console.WriteLine(myquery);
-            Console.WriteLine();
-
-            Console.WriteLine(myquery2);
-            Console.WriteLine();
-
-            Console.WriteLine(myquery3);
-            Console.WriteLine();
-
-            Console.WriteLine(q4);
-            Console.WriteLine();
+            Spry.Update("tableOne")
+                .Set(_ => myDto.Id)
+                .Where<int>("id").EqualTo(1)
+                .Execute(null);
 
             Console.ReadLine();
         }

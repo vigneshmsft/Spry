@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry", "Spry\Spry.csproj", "{46AD06AC-F969-4402-8881-41C80607E756}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry.Console", "Spry.Console\Spry.Console.csproj", "{A74CDA33-434D-4601-B0A9-9907475DAA51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry.Tests", "Spry.Tests\Spry.Tests.csproj", "{39014A12-1D04-4129-A0BE-A61B06F809AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A74CDA33-434D-4601-B0A9-9907475DAA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A74CDA33-434D-4601-B0A9-9907475DAA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A74CDA33-434D-4601-B0A9-9907475DAA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

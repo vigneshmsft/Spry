@@ -7,7 +7,7 @@
     {
         int Execute(IDbConnection connection, object parameters = null);
 
-        IEnumerable<TDto> Query<TDto>(IDbConnection connection, object parameters = null);
+        IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, object parameters = null);
 
         IEnumerable<dynamic> Query(IDbConnection connection, object parameters = null);
 
