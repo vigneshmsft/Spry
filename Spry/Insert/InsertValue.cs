@@ -92,22 +92,22 @@ namespace Spry.Insert
             _insertValueBuilder.Length -= 2;
         }
 
-        public int Execute(IDbConnection connection, object parameters = null)
+        public int Execute(IDbConnection connection, SpryParameters parameters = null)
         {
             return _table.Execute(connection, parameters);
         }
 
-        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, object parameters = null)
+        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, SpryParameters parameters = null)
         {
             return _table.Query<TDbDto>(connection, parameters);
         }
 
-        public IEnumerable<dynamic> Query(IDbConnection connection, object parameters = null)
+        public IEnumerable<dynamic> Query(IDbConnection connection, SpryParameters parameters = null)
         {
             return _table.Query(connection, parameters);
         }
 
-        public TColType ExecuteScalar<TColType>(IDbConnection connection, object parameters = null)
+        public TColType ExecuteScalar<TColType>(IDbConnection connection, SpryParameters parameters = null)
         {
             return _table.ExecuteScalar<TColType>(connection, parameters);
         }

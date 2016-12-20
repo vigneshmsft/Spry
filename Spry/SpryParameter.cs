@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Spry
 {
@@ -34,6 +35,14 @@ namespace Spry
         public IEnumerable<SpryParameter> Parameters
         {
             get { return _parameters; }
+        }
+
+        public void Add(SpryParameters parameters)
+        {
+            if (parameters != null && parameters._parameters.Any())
+            {
+                _parameters.AddRange(parameters._parameters);
+            }
         }
     }
 }

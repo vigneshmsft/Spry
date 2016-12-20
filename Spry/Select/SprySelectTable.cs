@@ -10,7 +10,8 @@ namespace Spry.Select
 
         private readonly List<InnerJoin<TDto>> _innerJoin;
 
-        public SprySelectTable(SprySelect<TDto> spry, string tableName, string schema = "dbo") : base(tableName, schema)
+        public SprySelectTable(SprySelect<TDto> spry, string tableName, string schema = "dbo")
+            : base(tableName, schema)
         {
             _innerJoin = new List<InnerJoin<TDto>>();
             Schema = schema;
@@ -44,7 +45,7 @@ namespace Spry.Select
             if (WhereCondition != null)
             {
                 returnString += "WHERE " + WhereCondition.BuildImpl();
-                
+
                 foreach (var andCondition in AndConditions)
                 {
                     returnString += " AND " + andCondition.BuildImpl();
@@ -54,7 +55,11 @@ namespace Spry.Select
                 {
                     returnString += " OR " + orCondition.BuildImpl();
                 }
+            }
 
+            if (!string.IsNullOrWhiteSpace(ExtraQuery))
+            {
+                returnString += ExtraQuery;
             }
 
             return returnString;

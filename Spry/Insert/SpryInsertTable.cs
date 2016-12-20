@@ -14,7 +14,14 @@ namespace Spry.Insert
 
         public override string Build()
         {
-            return _spry.Build();
+            var returnString = _spry.Build();
+
+            if (string.IsNullOrWhiteSpace(ExtraQuery))
+            {
+                returnString += ExtraQuery;
+            }
+
+            return returnString;
         }
     }
 }

@@ -12,6 +12,12 @@ namespace Spry.Table
         protected string Schema;
         protected string Alias;
 
+        private readonly SpryParameters _parameters = new SpryParameters();
+        protected Buildable WhereCondition;
+        protected readonly List<Buildable> AndConditions = new List<Buildable>();
+        protected readonly List<Buildable> OrConditions = new List<Buildable>();
+        protected string ExtraQuery = null;
+
         protected SpryTable(string tableName, string schema)
             : this(tableName, schema, null)
         {
@@ -28,11 +34,6 @@ namespace Spry.Table
         {
             return BuildImpl(this);
         }
-
-        private readonly SpryParameters _parameters = new SpryParameters();
-        protected Buildable WhereCondition;
-        protected readonly List<Buildable> AndConditions = new List<Buildable>();
-        protected readonly List<Buildable> OrConditions = new List<Buildable>();
 
         internal static string BuildImpl(SpryTable<TDto> table)
         {
@@ -100,23 +101,33 @@ namespace Spry.Table
             return orWhere;
         }
 
-        public int Execute(IDbConnection connection, object parameters = null)
+        public SpryTable<TDto> AppendQuery(string extraQuery)
         {
+            ExtraQuery = extraQuery;
+            return this;
+        }
+
+        public int Execute(IDbConnection connection, SpryParameters parameters = null)
+        {
+            _parameters.Add(parameters);
             return new SqlExecutor(Build()).Execute(connection, _parameters);
         }
 
-        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, object parameters = null)
+        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, SpryParameters parameters = null)
         {
+            _parameters.Add(parameters);
             return new SqlExecutor(Build()).Query<TDbDto>(connection, _parameters);
         }
 
-        public IEnumerable<dynamic> Query(IDbConnection connection, object parameters = null)
+        public IEnumerable<dynamic> Query(IDbConnection connection, SpryParameters parameters = null)
         {
+            _parameters.Add(parameters);
             return new SqlExecutor(Build()).Query(connection, _parameters);
         }
 
-        public TColType ExecuteScalar<TColType>(IDbConnection connection, object parameters = null)
+        public TColType ExecuteScalar<TColType>(IDbConnection connection, SpryParameters parameters = null)
         {
+            _parameters.Add(parameters);
             return new SqlExecutor(Build()).ExecuteScalar<TColType>(connection, _parameters);
         }
 
