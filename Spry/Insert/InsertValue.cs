@@ -23,13 +23,13 @@ namespace Spry.Insert
             _table = table;
             _insertColumnBuilder = new StringBuilder();
             _insertValueBuilder = new StringBuilder();
-            _parameters = new SpryParameters();
+            _parameters = table.Parameters;
         }
 
         public InsertValue<TDto> Value<TProperty>(Expression<Func<TDto, TProperty>> valueExpression)
         {
             var columnName = SpryExpression.GetColumnName(valueExpression);
-            var value = SpryExpression.GetColumnName(valueExpression);
+            var value = SpryExpression.GetColumnValue(valueExpression);
             InsertValueImpl(columnName, value);
             return this;
         }
@@ -43,6 +43,12 @@ namespace Spry.Insert
         public InsertValue<TDto> OutputInserted(string outputColumnName)
         {
             _outputCol = outputColumnName;
+            return this;
+        }
+
+        public InsertValue<TDto> OutputInserted<TProperty>(Expression<Func<TDto, TProperty>> columnExpression)
+        {
+            _outputCol = SpryExpression.GetColumnName(columnExpression);
             return this;
         }
 
@@ -69,14 +75,13 @@ namespace Spry.Insert
         internal string BuildImpl()
         {
             RemoveTrailingCommas();
-            string returnValue;
 
             if (!string.IsNullOrWhiteSpace(_outputCol))
             {
-                returnValue = string.Format(@"({0}){1}OUTPUT Inserted.{3}{1}VALUES{1}({2})", _insertColumnBuilder, Environment.NewLine, _insertValueBuilder, _outputCol);
+                return string.Format(@"({0}){1}OUTPUT Inserted.{3}{1}VALUES{1}({2})", _insertColumnBuilder, Environment.NewLine, _insertValueBuilder, _outputCol);
             }
 
-            returnValue = string.Format(@"({0}){1}VALUES{1}({2})", _insertColumnBuilder, Environment.NewLine, _insertValueBuilder);
+            string returnValue = string.Format(@"({0}){1}VALUES{1}({2})", _insertColumnBuilder, Environment.NewLine, _insertValueBuilder);
 
             if (_outputIdentity)
             {

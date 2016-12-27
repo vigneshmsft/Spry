@@ -37,13 +37,14 @@
       <HintPath>..\packages\Dapper.1.35\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Delete\SpryDelete.cs" />
+    <Compile Include="Delete\SpryDeleteTable.cs" />
     <Compile Include="IBuilder.cs" />
     <Compile Include="IExecutable.cs" />
     <Compile Include="Insert\SpryInsert.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Select\SprySelect.cs" />
     <Compile Include="Select\SprySelectTable.cs" />
     <Compile Include="SpryParameter.cs" />
+    <Compile Include="Table\IConditionItem.cs" />
     <Compile Include="Table\SpryTable.cs" />
     <Compile Include="Select\SprySelectColumn.cs" />
     <Compile Include="Spry.cs" />

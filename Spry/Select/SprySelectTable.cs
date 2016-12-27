@@ -10,20 +10,24 @@ namespace Spry.Select
 
         private readonly List<InnerJoin<TDto>> _innerJoin;
 
-        public SprySelectTable(SprySelect<TDto> spry, string tableName, string schema = "dbo")
-            : base(tableName, schema)
+        public SprySelectTable(SprySelect<TDto> spry, string tableName, string tableAlias = null, string schema = "dbo")
+            : base(tableName, schema, tableAlias)
         {
             _innerJoin = new List<InnerJoin<TDto>>();
-            Schema = schema;
             _spry = spry;
-            TableName = tableName;
         }
 
-        public InnerJoin<TDto> InnerJoin(string tableName, string dbSchema = "dbo")
+        public InnerJoin<TDto> InnerJoin(string tableName, string tableAlias = null, string dbSchema = "dbo")
         {
-            var innerJoin = new InnerJoin<TDto>(_spry, this, new SprySelectTable<TDto>(_spry, tableName, dbSchema));
+            var innerJoin = new InnerJoin<TDto>(_spry, this, new SprySelectTable<TDto>(_spry, tableName, tableAlias, dbSchema));
             _innerJoin.Add(innerJoin);
             return innerJoin;
+        }
+
+        public new SprySelectTable<TDto> As(string tableAlias)
+        {
+            Alias = tableAlias;
+            return this;
         }
 
         public override string Build()

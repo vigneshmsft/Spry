@@ -23,10 +23,10 @@ namespace Spry.Select
             return this;
         }
 
-        public SprySelectColumn<TDto> Column<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string alias)
+        public SprySelectColumn<TDto> Column<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix)
         {
             var columnName = SpryExpression.GetColumnName(columnExpression);
-            AppendColumn(alias + "." + columnName);
+            AppendColumn(colPrefix + "." + columnName);
             return this;
         }
 

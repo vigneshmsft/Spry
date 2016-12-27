@@ -1,11 +1,12 @@
 ﻿using System.Linq.Expressions;
 using System;
 using System.Text;
+using Spry.Table;
 using Spry.Where;
 
 namespace Spry.Update
 {
-    public class UpdateValue<TDto>
+    public class UpdateValue<TDto> : IConditionItem<TDto>
     {
         private readonly SpryUpdate<TDto> _spry;
         private readonly SpryUpdateTable<TDto> _table;
@@ -21,7 +22,7 @@ namespace Spry.Update
         public UpdateValue<TDto> Set<TProperty>(Expression<Func<TDto, TProperty>> valueExpression)
         {
             var columnName = SpryExpression.GetColumnName(valueExpression);
-            var value = SpryExpression.GetColumnName(valueExpression);
+            var value = SpryExpression.GetColumnValue(valueExpression);
             SetValueImpl(columnName, value);
             return this;
         }
@@ -32,9 +33,34 @@ namespace Spry.Update
             return this;
         }
 
+        public Where<TDto, TProperty> Where<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
+        {
+            return _table.Where(columnExpression, colPrefix);
+        }
+
         public Where<TDto, TProperty> Where<TProperty>(string columnName)
         {
             return _table.Where<TProperty>(columnName);
+        }
+
+        public Where<TDto, TProperty> AndWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
+        {
+            return _table.AndWhere(columnExpression, colPrefix);
+        }
+
+        public Where<TDto, TProperty> AndWhere<TProperty>(string columnName)
+        {
+            return _table.AndWhere<TProperty>(columnName);
+        }
+
+        public Where<TDto, TProperty> OrWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
+        {
+            return _table.OrWhere(columnExpression, colPrefix);
+        }
+
+        public Where<TDto, TProperty> OrWhere<TProperty>(string columnName)
+        {
+            return _table.OrWhere<TProperty>(columnName);
         }
 
         private void SetValueImpl(string columnName, object value)

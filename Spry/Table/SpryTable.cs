@@ -6,13 +6,13 @@ using Spry.Where;
 
 namespace Spry.Table
 {
-    public abstract class SpryTable<TDto> : IExecutable
+    public abstract class SpryTable<TDto> : IExecutable, IConditionItem<TDto>
     {
         protected string TableName;
         protected string Schema;
         protected string Alias;
 
-        private readonly SpryParameters _parameters = new SpryParameters();
+        internal readonly SpryParameters Parameters = new SpryParameters();
         protected Buildable WhereCondition;
         protected readonly List<Buildable> AndConditions = new List<Buildable>();
         protected readonly List<Buildable> OrConditions = new List<Buildable>();
@@ -56,47 +56,59 @@ namespace Spry.Table
             return this;
         }
 
-        public Where<TDto, TProperty> Where<TProperty>(Expression<Func<TDto, TProperty>> columnExpression)
+        public SpryTable<TDto> As(string tableAlias)
+        {
+            Alias = tableAlias;
+            return this;
+        }
+
+        public Where<TDto, TProperty> Where<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
         {
             var columnName = SpryExpression.GetColumnName(columnExpression);
-            var where = new Where<TDto, TProperty>(this, _parameters, columnName);
+            if (!string.IsNullOrWhiteSpace(colPrefix))
+            {
+                columnName = colPrefix + "." + columnName;
+            }
+            var where = new Where<TDto, TProperty>(this, Parameters, columnName);
             WhereCondition = where;
             return where;
         }
 
         public Where<TDto, TProperty> Where<TProperty>(string columnName)
         {
-            var where = new Where<TDto, TProperty>(this, _parameters, columnName);
+            var where = new Where<TDto, TProperty>(this, Parameters, columnName);
             WhereCondition = where;
             return where;
         }
 
-        public Where<TDto, TProperty> AndWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression)
+        public Where<TDto, TProperty> AndWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
         {
             var columnName = SpryExpression.GetColumnName(columnExpression);
-            var andWhere = new Where<TDto, TProperty>(this, _parameters, columnName);
+            if (!string.IsNullOrWhiteSpace(colPrefix)) columnName = colPrefix + "." + columnName;
+            var andWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
             AndConditions.Add(andWhere);
             return andWhere;
         }
 
         public Where<TDto, TProperty> AndWhere<TProperty>(string columnName)
         {
-            var andWhere = new Where<TDto, TProperty>(this, _parameters, columnName);
+            var andWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
             AndConditions.Add(andWhere);
             return andWhere;
         }
 
-        public Where<TDto, TProperty> OrWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression)
+        public Where<TDto, TProperty> OrWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
         {
             var columnName = SpryExpression.GetColumnName(columnExpression);
-            var orWhere = new Where<TDto, TProperty>(this, _parameters, columnName);
+            if (!string.IsNullOrWhiteSpace(colPrefix)) columnName = colPrefix + "." + columnName;
+            var orWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
             OrConditions.Add(orWhere);
             return orWhere;
         }
 
         public Where<TDto, TProperty> OrWhere<TProperty>(string columnName)
         {
-            var orWhere = new Where<TDto, TProperty>(this, _parameters, columnName);
+            var orWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
             OrConditions.Add(orWhere);
             return orWhere;
         }
@@ -109,31 +121,31 @@ namespace Spry.Table
 
         public int Execute(IDbConnection connection, SpryParameters parameters = null)
         {
-            _parameters.Add(parameters);
-            return new SqlExecutor(Build()).Execute(connection, _parameters);
+            Parameters.Add(parameters);
+            return new SqlExecutor(Build()).Execute(connection, Parameters);
         }
 
         public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, SpryParameters parameters = null)
         {
-            _parameters.Add(parameters);
-            return new SqlExecutor(Build()).Query<TDbDto>(connection, _parameters);
+            Parameters.Add(parameters);
+            return new SqlExecutor(Build()).Query<TDbDto>(connection, Parameters);
         }
 
         public IEnumerable<dynamic> Query(IDbConnection connection, SpryParameters parameters = null)
         {
-            _parameters.Add(parameters);
-            return new SqlExecutor(Build()).Query(connection, _parameters);
+            Parameters.Add(parameters);
+            return new SqlExecutor(Build()).Query(connection, Parameters);
         }
 
         public TColType ExecuteScalar<TColType>(IDbConnection connection, SpryParameters parameters = null)
         {
-            _parameters.Add(parameters);
-            return new SqlExecutor(Build()).ExecuteScalar<TColType>(connection, _parameters);
+            Parameters.Add(parameters);
+            return new SqlExecutor(Build()).ExecuteScalar<TColType>(connection, Parameters);
         }
 
         internal void AddParameter(string name, object value)
         {
-            _parameters.Add(name, value);
+            Parameters.Add(name, value);
         }
     }
 }

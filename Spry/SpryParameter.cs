@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Spry
@@ -16,7 +17,7 @@ namespace Spry
         public object Value { get; set; }
     }
 
-    public class SpryParameters
+    public class SpryParameters : IEnumerable<KeyValuePair<string, object>>
     {
         private readonly List<SpryParameter> _parameters = new List<SpryParameter>();
 
@@ -43,6 +44,19 @@ namespace Spry
             {
                 _parameters.AddRange(parameters._parameters);
             }
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            foreach (var spryParameter in _parameters)
+            {
+                yield return new KeyValuePair<string, object>(spryParameter.Name, spryParameter.Value);
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

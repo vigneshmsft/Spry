@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry", "Spry\Spry.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry.Console", "Spry.Console\Spry.Console.csproj", "{A74CDA33-434D-4601-B0A9-9907475DAA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry.Tests", "Spry.Tests\Spry.Tests.csproj", "{39014A12-1D04-4129-A0BE-A61B06F809AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spry.Tests", "Spry.Tests\Spry.Tests.csproj", "{7D377906-64B6-4DC2-9F7E-489646B63CAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A74CDA33-434D-4601-B0A9-9907475DAA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A74CDA33-434D-4601-B0A9-9907475DAA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A74CDA33-434D-4601-B0A9-9907475DAA51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39014A12-1D04-4129-A0BE-A61B06F809AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D377906-64B6-4DC2-9F7E-489646B63CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D377906-64B6-4DC2-9F7E-489646B63CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D377906-64B6-4DC2-9F7E-489646B63CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D377906-64B6-4DC2-9F7E-489646B63CAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
