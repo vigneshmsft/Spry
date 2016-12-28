@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Text;
-using Spry.Table;
 
 namespace Spry.Insert
 {
     public class InsertValue<TDto> : IExecutable
     {
         private readonly SpryInsert<TDto> _spry;
-        private readonly SpryTable<TDto> _table;
+        private readonly SpryInsertTable<TDto> _table;
         private readonly SpryParameters _parameters;
         private readonly StringBuilder _insertColumnBuilder;
         private readonly StringBuilder _insertValueBuilder;
         private string _outputCol = null;
         private bool _outputIdentity = false;
 
-        internal InsertValue(SpryInsert<TDto> spry, SpryTable<TDto> table)
+        internal InsertValue(SpryInsert<TDto> spry, SpryInsertTable<TDto> table)
         {
             _spry = spry;
             _table = table;

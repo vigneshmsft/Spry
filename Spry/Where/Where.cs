@@ -5,15 +5,15 @@ using Spry.Table;
 
 namespace Spry.Where
 {
-    public class Where<TDto, TProperty> : Buildable
+    public class Where<TDto, TProperty, TTable> : Buildable where TTable : SpryTable<TDto, TTable>
     {
-        private readonly SpryTable<TDto> _table;
+        private readonly TTable _table;
         private readonly SpryParameters _parameters;
         private readonly string _columnName;
         private readonly string _columnParameterName;
         private readonly StringBuilder _whereBuilder;
 
-        internal Where(SpryTable<TDto> table, SpryParameters parameters, string columnName)
+        internal Where(TTable table, SpryParameters parameters, string columnName)
         {
             _whereBuilder = new StringBuilder();
             _table = table;
@@ -22,35 +22,35 @@ namespace Spry.Where
             _columnParameterName = CleanColumnName(_columnName);
         }
 
-        public SpryTable<TDto> EqualTo(TProperty value)
+        public TTable EqualTo(TProperty value)
         {
             _parameters.Add(_columnParameterName, value);
             _whereBuilder.AppendFormat(@"{0} = @{1}", _columnName, _columnParameterName);
             return _table;
         }
 
-        public SpryTable<TDto> In(IEnumerable<TProperty> value)
+        public TTable In(IEnumerable<TProperty> value)
         {
             _parameters.Add(_columnParameterName, value);
             _whereBuilder.AppendFormat(@"{0} IN @{1}", _columnName, _columnParameterName);
             return _table;
         }
 
-        public SpryTable<TDto> GreaterThan(TProperty value)
+        public TTable GreaterThan(TProperty value)
         {
             _parameters.Add(_columnParameterName, value);
             _whereBuilder.AppendFormat(@"{0} > @{1}", _columnName, _columnParameterName);
             return _table;
         }
 
-        public SpryTable<TDto> LessThan(TProperty value)
+        public TTable LessThan(TProperty value)
         {
             _parameters.Add(_columnParameterName, value);
             _whereBuilder.AppendFormat(@"{0} < @{1}", _columnName, _columnParameterName);
             return _table;
         }
 
-        public SpryTable<TDto> LessThanOrEqualTo(TProperty value)
+        public TTable LessThanOrEqualTo(TProperty value)
         {
             _parameters.Add(_columnParameterName, value);
             _whereBuilder.AppendFormat(@"{0} <= @{1}", _columnName, _columnParameterName);
@@ -58,14 +58,14 @@ namespace Spry.Where
         }
 
 
-        public SpryTable<TDto> GreaterThanOrEqualTo(TProperty value)
+        public TTable GreaterThanOrEqualTo(TProperty value)
         {
             _parameters.Add(_columnParameterName, value);
             _whereBuilder.AppendFormat(@"{0} >= @{1}", _columnName, _columnParameterName);
             return _table;
         }
 
-        public SpryTable<TDto> InBetween(TProperty valueOne, TProperty valueTwo)
+        public TTable InBetween(TProperty valueOne, TProperty valueTwo)
         {
             _parameters.Add(_columnParameterName, valueOne);
             _parameters.Add(_columnParameterName + "valueTwo", valueTwo);

@@ -8,7 +8,7 @@ namespace Spry.Delete
 
         private SpryDeleteTable<TDto> _table;
 
-        public SpryTable<TDto> From(string tableName, string schema = "dbo")
+        public SpryDeleteTable<TDto> From(string tableName, string schema = "dbo")
         {
             _table = new SpryDeleteTable<TDto>(this, tableName, schema);
             return _table;

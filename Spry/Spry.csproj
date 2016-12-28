@@ -61,6 +61,9 @@
     <Compile Include="SpryExpression.cs" />
     <Compile Include="SqlExecutor.cs" />
     <Compile Include="Table\InnerJoin.cs" />
+    <Compile Include="Table\SpryTableConditions.cs">
+      <DependentUpon>SpryTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Update\SpryUpdate.cs" />
     <Compile Include="Update\SpryUpdateTable.cs" />
     <Compile Include="Update\UpdateValue.cs" />

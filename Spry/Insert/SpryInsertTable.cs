@@ -2,7 +2,7 @@
 
 namespace Spry.Insert
 {
-    internal class SpryInsertTable<TDto> : SpryTable<TDto>
+    internal class SpryInsertTable<TDto> : SpryTable<TDto, SpryInsertTable<TDto>>
     {
         private readonly SpryInsert<TDto> _spry;
 
@@ -10,6 +10,11 @@ namespace Spry.Insert
             : base(tableName, schema)
         {
             _spry = spry;
+        }
+
+        protected override SpryInsertTable<TDto> TableImpl
+        {
+            get { return this; }
         }
 
         public override string Build()

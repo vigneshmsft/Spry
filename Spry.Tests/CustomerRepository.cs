@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Spry.Table;
 using Spry.Tests.Dto;
 
 namespace Spry.Tests
@@ -92,7 +93,7 @@ namespace Spry.Tests
                            .Column(_ => _.Address.PostCode)
                            .Column(_ => _.Address.CustomerAddressId)
                            .Column(_ => _.Address.LineOne)
-                           .From(CUSTOMER_TABLE).As("C")
+                           .From(CUSTOMER_TABLE).As("C").InSchema("dbo")
                            .InnerJoin(CUSTOMER_ADDRESS_TABLE, "CA").On("CA.CustomerId", "C.CustomerId")
                            .Where(_ => _.CustomerId, "C").EqualTo(customerId)
                            .Query<dynamic>(connection).SingleOrDefault();

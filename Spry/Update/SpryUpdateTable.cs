@@ -2,14 +2,19 @@
 
 namespace Spry.Update
 {
-    public class SpryUpdateTable<TDto> : SpryTable<TDto>
+    public class SpryUpdateTable<TDto> : SpryTable<TDto, SpryUpdateTable<TDto>>
     {
         private readonly SpryUpdate<TDto> _spry;
 
-        internal SpryUpdateTable(SpryUpdate<TDto> spry,string tableName, string schema)
+        internal SpryUpdateTable(SpryUpdate<TDto> spry, string tableName, string schema)
             : base(tableName, schema)
         {
             _spry = spry;
+        }
+
+        protected override SpryUpdateTable<TDto> TableImpl
+        {
+            get { return this; }
         }
 
         public override string Build()

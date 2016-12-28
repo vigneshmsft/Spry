@@ -4,7 +4,7 @@ using Spry.Table;
 
 namespace Spry.Select
 {
-    public sealed class SprySelectTable<TDto> : SpryTable<TDto>
+    public sealed class SprySelectTable<TDto> : SpryTable<TDto, SprySelectTable<TDto>>
     {
         private readonly SprySelect<TDto> _spry;
 
@@ -24,10 +24,9 @@ namespace Spry.Select
             return innerJoin;
         }
 
-        public new SprySelectTable<TDto> As(string tableAlias)
+        protected override SprySelectTable<TDto> TableImpl
         {
-            Alias = tableAlias;
-            return this;
+            get { return this; }
         }
 
         public override string Build()

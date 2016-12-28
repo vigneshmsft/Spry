@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq.Expressions;
-using Spry.Where;
 
 namespace Spry.Table
 {
-    public abstract class SpryTable<TDto> : IExecutable, IConditionItem<TDto>
+    public abstract partial class SpryTable<TDto, TTable> : IExecutable, IConditionItem<TDto, TTable> where TTable : SpryTable<TDto, TTable>
     {
         protected string TableName;
         protected string Schema;
@@ -17,6 +14,8 @@ namespace Spry.Table
         protected readonly List<Buildable> AndConditions = new List<Buildable>();
         protected readonly List<Buildable> OrConditions = new List<Buildable>();
         protected string ExtraQuery = null;
+
+        protected abstract TTable TableImpl { get; }
 
         protected SpryTable(string tableName, string schema)
             : this(tableName, schema, null)
@@ -35,7 +34,7 @@ namespace Spry.Table
             return BuildImpl(this);
         }
 
-        internal static string BuildImpl(SpryTable<TDto> table)
+        internal static string BuildImpl(SpryTable<TDto, TTable> table)
         {
             string returnString = null;
 
@@ -50,70 +49,19 @@ namespace Spry.Table
             return returnString;
         }
 
-        public SpryTable<TDto> InSchema(string dbSchema)
+        public TTable InSchema(string dbSchema)
         {
             Schema = dbSchema;
-            return this;
+            return TableImpl;
         }
 
-        public SpryTable<TDto> As(string tableAlias)
+        public TTable As(string tableAlias)
         {
             Alias = tableAlias;
-            return this;
+            return TableImpl;
         }
 
-        public Where<TDto, TProperty> Where<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
-        {
-            var columnName = SpryExpression.GetColumnName(columnExpression);
-            if (!string.IsNullOrWhiteSpace(colPrefix))
-            {
-                columnName = colPrefix + "." + columnName;
-            }
-            var where = new Where<TDto, TProperty>(this, Parameters, columnName);
-            WhereCondition = where;
-            return where;
-        }
-
-        public Where<TDto, TProperty> Where<TProperty>(string columnName)
-        {
-            var where = new Where<TDto, TProperty>(this, Parameters, columnName);
-            WhereCondition = where;
-            return where;
-        }
-
-        public Where<TDto, TProperty> AndWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
-        {
-            var columnName = SpryExpression.GetColumnName(columnExpression);
-            if (!string.IsNullOrWhiteSpace(colPrefix)) columnName = colPrefix + "." + columnName;
-            var andWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
-            AndConditions.Add(andWhere);
-            return andWhere;
-        }
-
-        public Where<TDto, TProperty> AndWhere<TProperty>(string columnName)
-        {
-            var andWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
-            AndConditions.Add(andWhere);
-            return andWhere;
-        }
-
-        public Where<TDto, TProperty> OrWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
-        {
-            var columnName = SpryExpression.GetColumnName(columnExpression);
-            if (!string.IsNullOrWhiteSpace(colPrefix)) columnName = colPrefix + "." + columnName;
-            var orWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
-            OrConditions.Add(orWhere);
-            return orWhere;
-        }
-
-        public Where<TDto, TProperty> OrWhere<TProperty>(string columnName)
-        {
-            var orWhere = new Where<TDto, TProperty>(this, Parameters, columnName);
-            OrConditions.Add(orWhere);
-            return orWhere;
-        }
-
-        public SpryTable<TDto> AppendQuery(string extraQuery)
+        public SpryTable<TDto, TTable> AppendQuery(string extraQuery)
         {
             ExtraQuery = extraQuery;
             return this;

@@ -3,7 +3,7 @@ using Spry.Table;
 
 namespace Spry.Delete
 {
-    public class SpryDeleteTable<TDto> : SpryTable<TDto>
+    public class SpryDeleteTable<TDto> : SpryTable<TDto, SpryDeleteTable<TDto>>
     {
         private readonly SpryDelete<TDto> _spry;
 
@@ -11,6 +11,11 @@ namespace Spry.Delete
             : base(tableName, schema)
         {
             _spry = spry;
+        }
+
+        protected override SpryDeleteTable<TDto> TableImpl
+        {
+            get { return this; }
         }
 
         public override string Build()

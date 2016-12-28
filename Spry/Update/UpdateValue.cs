@@ -6,13 +6,13 @@ using Spry.Where;
 
 namespace Spry.Update
 {
-    public class UpdateValue<TDto> : IConditionItem<TDto>
+    public class UpdateValue<TDto> : IConditionItem<TDto, SpryUpdateTable<TDto>>
     {
         private readonly SpryUpdate<TDto> _spry;
         private readonly SpryUpdateTable<TDto> _table;
         private readonly StringBuilder _updateBuilder;
 
-        public UpdateValue(SpryUpdate<TDto> spry , SpryUpdateTable<TDto> table)
+        public UpdateValue(SpryUpdate<TDto> spry, SpryUpdateTable<TDto> table)
         {
             _spry = spry;
             _table = table;
@@ -31,36 +31,6 @@ namespace Spry.Update
         {
             SetValueImpl(columnName, value);
             return this;
-        }
-
-        public Where<TDto, TProperty> Where<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
-        {
-            return _table.Where(columnExpression, colPrefix);
-        }
-
-        public Where<TDto, TProperty> Where<TProperty>(string columnName)
-        {
-            return _table.Where<TProperty>(columnName);
-        }
-
-        public Where<TDto, TProperty> AndWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
-        {
-            return _table.AndWhere(columnExpression, colPrefix);
-        }
-
-        public Where<TDto, TProperty> AndWhere<TProperty>(string columnName)
-        {
-            return _table.AndWhere<TProperty>(columnName);
-        }
-
-        public Where<TDto, TProperty> OrWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
-        {
-            return _table.OrWhere(columnExpression, colPrefix);
-        }
-
-        public Where<TDto, TProperty> OrWhere<TProperty>(string columnName)
-        {
-            return _table.OrWhere<TProperty>(columnName);
         }
 
         private void SetValueImpl(string columnName, object value)
@@ -83,6 +53,36 @@ namespace Spry.Update
         private void RemoveTrailingCommas()
         {
             _updateBuilder.Length -= 4;
+        }
+
+        public Where<TDto, TProperty, SpryUpdateTable<TDto>> Where<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
+        {
+            return _table.Where(columnExpression, colPrefix);
+        }
+
+        public Where<TDto, TProperty, SpryUpdateTable<TDto>> AndWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
+        {
+            return _table.AndWhere(columnExpression, colPrefix);
+        }
+
+        public Where<TDto, TProperty, SpryUpdateTable<TDto>> OrWhere<TProperty>(Expression<Func<TDto, TProperty>> columnExpression, string colPrefix = null)
+        {
+            return _table.OrWhere(columnExpression, colPrefix);
+        }
+
+        public Where<TDto, TProperty, SpryUpdateTable<TDto>> Where<TProperty>(string columnName)
+        {
+            return _table.Where<TProperty>(columnName);
+        }
+
+        public Where<TDto, TProperty, SpryUpdateTable<TDto>> OrWhere<TProperty>(string columnName)
+        {
+            return _table.OrWhere<TProperty>(columnName);
+        }
+
+        public Where<TDto, TProperty, SpryUpdateTable<TDto>> AndWhere<TProperty>(string columnName)
+        {
+            return _table.AndWhere<TProperty>(columnName);
         }
     }
 }

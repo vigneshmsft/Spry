@@ -6,7 +6,7 @@ namespace Spry.Insert
     public class SpryInsert<TDto>
     {
         private InsertValue<TDto> _value;
-        private SpryTable<TDto> _spryTable;
+        private SpryInsertTable<TDto> _spryTable;
         private string _table;
         private string _dbSchema;
 
