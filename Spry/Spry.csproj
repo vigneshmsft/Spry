@@ -53,7 +53,11 @@
     <Compile Include="Select\SprySelect.cs" />
     <Compile Include="Select\SprySelectTable.cs" />
     <Compile Include="SpryParameter.cs" />
+    <Compile Include="Table\FullOuterJoin.cs" />
     <Compile Include="Table\IConditionItem.cs" />
+    <Compile Include="Table\Join.cs" />
+    <Compile Include="Table\LeftOuterJoin.cs" />
+    <Compile Include="Table\RightOuterJoin.cs" />
     <Compile Include="Table\SpryTable.cs" />
     <Compile Include="Select\SprySelectColumn.cs" />
     <Compile Include="Spry.cs" />

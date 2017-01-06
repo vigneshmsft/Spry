@@ -8,20 +8,41 @@ namespace Spry.Select
     {
         private readonly SprySelect<TDto> _spry;
 
-        private readonly List<InnerJoin<TDto>> _innerJoin;
+        private readonly List<Join<TDto>> _joins;
 
         public SprySelectTable(SprySelect<TDto> spry, string tableName, string tableAlias = null, string schema = "dbo")
             : base(tableName, schema, tableAlias)
         {
-            _innerJoin = new List<InnerJoin<TDto>>();
+            _joins = new List<Join<TDto>>();
             _spry = spry;
         }
 
-        public InnerJoin<TDto> InnerJoin(string tableName, string tableAlias = null, string dbSchema = "dbo")
+        public Join<TDto> InnerJoin(string tableName, string tableAlias = null, string dbSchema = "dbo")
         {
             var innerJoin = new InnerJoin<TDto>(_spry, this, new SprySelectTable<TDto>(_spry, tableName, tableAlias, dbSchema));
-            _innerJoin.Add(innerJoin);
+            _joins.Add(innerJoin);
             return innerJoin;
+        }
+
+        public Join<TDto> LeftOuterJoin(string tableName, string tableAlias = null, string dbSchema = "dbo")
+        {
+            var leftOuterJoin = new LeftOuterJoin<TDto>(_spry, this, new SprySelectTable<TDto>(_spry, tableName, tableAlias, dbSchema));
+            _joins.Add(leftOuterJoin);
+            return leftOuterJoin;
+        }
+
+        public Join<TDto> RightOuterJoin(string tableName, string tableAlias = null, string dbSchema = "dbo")
+        {
+            var rightOuterJoin = new RightOuterJoin<TDto>(_spry, this, new SprySelectTable<TDto>(_spry, tableName, tableAlias, dbSchema));
+            _joins.Add(rightOuterJoin);
+            return rightOuterJoin;
+        }
+
+        public Join<TDto> FullOuterJoin(string tableName, string tableAlias = null, string dbSchema = "dbo")
+        {
+            var fullOuterJoin = new FullOuterJoin<TDto>(_spry, this, new SprySelectTable<TDto>(_spry, tableName, tableAlias, dbSchema));
+            _joins.Add(fullOuterJoin);
+            return fullOuterJoin;
         }
 
         protected override SprySelectTable<TDto> TableImpl
@@ -40,9 +61,9 @@ namespace Spry.Select
 
             returnString += Environment.NewLine;
 
-            foreach (var innerJoin in _innerJoin)
+            foreach (var joins in _joins)
             {
-                returnString += innerJoin.BuildImpl();
+                returnString += joins.BuildImpl();
             }
 
             if (WhereCondition != null)

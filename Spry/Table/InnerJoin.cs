@@ -3,35 +3,17 @@ using Spry.Select;
 
 namespace Spry.Table
 {
-    public class InnerJoin<TDto>
+    public class InnerJoin<TDto> : Join<TDto>
     {
-        private readonly SprySelect<TDto> _spry;
-        private readonly SprySelectTable<TDto> _tableOne;
-        private readonly SprySelectTable<TDto> _tableTwo;
-        private string _onCondition;
-
         public InnerJoin(SprySelect<TDto> spry, SprySelectTable<TDto> tableOne, SprySelectTable<TDto> tableTwo)
+            : base(spry, tableOne, tableTwo)
         {
-            _spry = spry;
-            _tableOne = tableOne;
-            _tableTwo = tableTwo;
+
         }
 
-        public SprySelectTable<TDto> On(string colOne, string colTwo)
+        internal override string BuildImpl()
         {
-            _onCondition = " ON " + colOne + " = " + colTwo;
-            return _tableOne;
-        }
-
-        internal string BuildImpl()
-        {
-            return "INNER JOIN " + _tableTwo.BuildImpl() + _onCondition + Environment.NewLine;
-        }
-
-        public string Build()
-        {
-            return _spry.Build();
+            return "INNER JOIN " + TableTwo.BuildImpl() + OnCondition + Environment.NewLine;
         }
     }
-
 }

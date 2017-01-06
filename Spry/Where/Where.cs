@@ -80,7 +80,8 @@ namespace Spry.Where
 
         private string CleanColumnName(string columnName)
         {
-            return columnName.Replace("@", "").Replace(".", "");
+            var randomNumber = DateTime.Now.Ticks;
+            return "p" + randomNumber + columnName.Replace("@", "").Replace(".", "");
         }
     }
 }
