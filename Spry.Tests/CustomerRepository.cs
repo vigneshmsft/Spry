@@ -67,6 +67,34 @@ namespace Spry.Tests
             }
         }
 
+        public bool UpdateSqlInjection(int customerId, string name)
+        {
+            using (var connection = _connectionFactory.CreateConnection())
+            {
+                var rowsUpdated = Spry.Update<Customer>(CUSTOMER_TABLE)
+                                      .Set(_ => name)
+                                      .Where(_ => customerId).EqualTo(customerId)
+                                      .AndWhere<int>("1 =1;" +
+                                                     "DELETE FROM CUSTOMER; --").EqualTo(1)
+                                      .Execute(connection);
+
+                return rowsUpdated > 0;
+            }
+        }
+
+        public bool UpdateByName(string oldName, string name)
+        {
+            using (var connection = _connectionFactory.CreateConnection())
+            {
+                var rowsUpdated = Spry.Update<Customer>(CUSTOMER_TABLE)
+                                      .Set(_ => name)
+                                      .Where(_ => _.Name).EqualTo(oldName)
+                                      .Execute(connection);
+
+                return rowsUpdated > 0;
+            }
+        }
+
         public bool Delete(int customerId)
         {
             using (var connection = _connectionFactory.CreateConnection())

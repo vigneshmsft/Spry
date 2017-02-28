@@ -18,8 +18,8 @@ namespace Spry.Where
             _whereBuilder = new StringBuilder();
             _table = table;
             _parameters = parameters;
-            _columnName = columnName;
-            _columnParameterName = CleanColumnName(_columnName);
+            _columnName = columnName.Replace(";", "");
+            _columnParameterName = CleanParameterName(_columnName);
         }
 
         public TTable EqualTo(TProperty value)
@@ -57,7 +57,6 @@ namespace Spry.Where
             return _table;
         }
 
-
         public TTable GreaterThanOrEqualTo(TProperty value)
         {
             _parameters.Add(_columnParameterName, value);
@@ -78,10 +77,9 @@ namespace Spry.Where
             return _whereBuilder + Environment.NewLine;
         }
 
-        private string CleanColumnName(string columnName)
+        private static string CleanParameterName(string columnName)
         {
-            var randomNumber = DateTime.Now.Ticks;
-            return "p" + randomNumber + columnName.Replace("@", "").Replace(".", "");
+            return "p" + columnName.Replace("@", "").Replace(".", "").Replace(";","");
         }
     }
 }

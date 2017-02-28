@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data.SqlClient;
 using Spry.Tests.Dto;
 
 namespace Spry.Tests
@@ -102,6 +103,27 @@ namespace Spry.Tests
         }
 
         [TestMethod]
+        public void UpdateColumInWhereClause_CheckUpdated()
+        {
+            var customer = new Customer
+            {
+                CustomerId = _customerRepository.Create("John", DateTime.Today),
+            };
+
+            customer = _customerRepository.Read(customer.CustomerId);
+
+            const string newName = "John Doe";
+            var updated = _customerRepository.UpdateByName("John", newName);
+
+            Assert.IsTrue(updated);
+
+            var updatedCustomer = _customerRepository.Read(customer.CustomerId);
+
+            Assert.AreEqual(customer.DateOfBirth, updatedCustomer.DateOfBirth);
+            Assert.AreEqual(newName, updatedCustomer.Name);
+        }
+
+        [TestMethod]
         public void DeleteCustomer_CheckDeleted()
         {
             var customer = new Customer
@@ -124,6 +146,34 @@ namespace Spry.Tests
                 Spry.Delete().From("CustomerAddress").Execute(connection);
                 Spry.Delete().From("Customer").Execute(connection);
             }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SqlException))]
+        public void SqlInjection_InWhereColumnCheckThrowsException()
+        {
+            var customer = new Customer
+            {
+                CustomerId = _customerRepository.Create("John", DateTime.Today),
+            };
+
+            customer = _customerRepository.Read(customer.CustomerId);
+
+            _customerRepository.UpdateSqlInjection(customer.CustomerId, "Customer");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SqlException))]
+        public void SqlInjection_InParameterValueCheckThrowsException()
+        {
+            var customer = new Customer
+            {
+                CustomerId = _customerRepository.Create("John", DateTime.Today),
+            };
+
+            customer = _customerRepository.Read(customer.CustomerId);
+
+            _customerRepository.Update(customer.CustomerId, ";DELETE FROM dbo.Customer; /*", DateTime.Today);
         }
     }
 }
