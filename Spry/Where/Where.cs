@@ -79,7 +79,7 @@ namespace Spry.Where
 
         private static string CleanParameterName(string columnName)
         {
-            return "p" + columnName.Replace("@", "").Replace(".", "").Replace(";","");
+            return "p" + columnName.Replace("@", "").Replace(".", "").Replace(";", "").Replace("-", "");
         }
     }
 }

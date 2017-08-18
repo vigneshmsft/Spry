@@ -96,24 +96,24 @@ namespace Spry.Insert
             _insertValueBuilder.Length -= 2;
         }
 
-        public int Execute(IDbConnection connection, SpryParameters parameters = null)
+        public int Execute(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
-            return _table.Execute(connection, parameters);
+            return _table.Execute(connection, parameters: parameters);
         }
 
-        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, SpryParameters parameters = null)
+        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
-            return _table.Query<TDbDto>(connection, parameters);
+            return _table.Query<TDbDto>(connection, parameters: parameters);
         }
 
-        public IEnumerable<dynamic> Query(IDbConnection connection, SpryParameters parameters = null)
+        public IEnumerable<dynamic> Query(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
-            return _table.Query(connection, parameters);
+            return _table.Query(connection, parameters: parameters);
         }
 
-        public TColType ExecuteScalar<TColType>(IDbConnection connection, SpryParameters parameters = null)
+        public TColType ExecuteScalar<TColType>(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
-            return _table.ExecuteScalar<TColType>(connection, parameters);
+            return _table.ExecuteScalar<TColType>(connection, parameters: parameters);
         }
     }
 }

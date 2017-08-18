@@ -22,6 +22,12 @@ namespace Spry.Table
             return TableOne;
         }
 
+        public virtual SprySelectTable<TDto> On(string onCondition)
+        {
+            OnCondition = onCondition;
+            return TableOne;
+        }
+
         public virtual string Build()
         {
             return Spry.Build();

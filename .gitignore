@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Spry/bin
+/Spry/obj
+/Spry.Console/bin
+/Spry.Console/obj
+/Spry.Tests/bin
+/Spry.Tests/obj
+/TestResults
+*.nupkg
+/packages
+/.vs/Spry/v15

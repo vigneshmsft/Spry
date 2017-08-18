@@ -5,12 +5,12 @@
 
     public interface IExecutable
     {
-        int Execute(IDbConnection connection, SpryParameters parameters = null);
+        int Execute(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null);
 
-        IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, SpryParameters parameters = null);
+        IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null);
 
-        IEnumerable<dynamic> Query(IDbConnection connection, SpryParameters parameters = null);
+        IEnumerable<dynamic> Query(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null);
 
-        TColType ExecuteScalar<TColType>(IDbConnection connection, SpryParameters parameters = null);
+        TColType ExecuteScalar<TColType>(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null);
     }
 }

@@ -67,28 +67,28 @@ namespace Spry.Table
             return this;
         }
 
-        public int Execute(IDbConnection connection, SpryParameters parameters = null)
+        public int Execute(IDbConnection connection, CommandType commandType = CommandType.Text,  SpryParameters parameters = null)
         {
             Parameters.Add(parameters);
-            return new SqlExecutor(Build()).Execute(connection, Parameters);
+            return new SqlExecutor(Build()).Execute(connection, commandType, Parameters);
         }
 
-        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, SpryParameters parameters = null)
+        public IEnumerable<TDbDto> Query<TDbDto>(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
             Parameters.Add(parameters);
-            return new SqlExecutor(Build()).Query<TDbDto>(connection, Parameters);
+            return new SqlExecutor(Build()).Query<TDbDto>(connection, commandType, Parameters);
         }
 
-        public IEnumerable<dynamic> Query(IDbConnection connection, SpryParameters parameters = null)
+        public IEnumerable<dynamic> Query(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
             Parameters.Add(parameters);
-            return new SqlExecutor(Build()).Query(connection, Parameters);
+            return new SqlExecutor(Build()).Query(connection, commandType, Parameters);
         }
 
-        public TColType ExecuteScalar<TColType>(IDbConnection connection, SpryParameters parameters = null)
+        public TColType ExecuteScalar<TColType>(IDbConnection connection, CommandType commandType = CommandType.Text, SpryParameters parameters = null)
         {
             Parameters.Add(parameters);
-            return new SqlExecutor(Build()).ExecuteScalar<TColType>(connection, Parameters);
+            return new SqlExecutor(Build()).ExecuteScalar<TColType>(connection, commandType, Parameters);
         }
 
         internal void AddParameter(string name, object value)
