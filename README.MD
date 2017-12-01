@@ -3,17 +3,17 @@ Spry - a simple CRUD query builder extension for Dapper
 
 What is Spry
 ------------
-[Spry](https://www.nuget.org/packages/Spry) is a simple .NET library which allows you to write fluent CRUD queries� 
+[Spry](https://www.nuget.org/packages/Spry) is a simple .NET library which allows you to write fluent CRUD queries 
 and execute the queries using [Dapper](https://github.com/StackExchange/dapper-dot-net).
 
 Why Spry ?
 ----------
-In one of my projects we decided not to write stored procedures�
-and keep the queries within code, similar to the popular approach being followed by StackOverflow.�
-The upside of this approach is that one tends to keep only specific CRUD logic in queries and �
-helps to ensure business logics do not get inside your stored procedures.�
+In one of my projects we decided not to write stored procedures
+and keep the queries within code, similar to the popular approach being followed by StackOverflow.
+The upside of this approach is that one tends to keep only specific CRUD logic in queries and 
+helps to ensure business logics do not get inside your stored procedures.
 It is also easier to debug this way when one sees the actual query being executed on the server.
-We also decided not to use any ORM like Entity Framework or NHibernate and only use Dapper.�
+We also decided not to use any ORM like Entity Framework or NHibernate and only use Dapper.
 You start to see code like this.
 
 ```csharp
@@ -31,12 +31,12 @@ var count = _connection.Execute(insertCustomerQuery, new { @customerId = newCust
 return count == 1;
 }
 ```
-�
-This is a relatively straightforward code but beings to break once you start making changes to the `Customer` table.�
-Believe me changes to the tables are very commom, especially when a project is in its nascent stages.�
-The moment you decide to rename few columns  or add new columns you need to remember to do a find and replace all occurances of�
-those strings in your solution, which is not a very efficient way of doing things.�
-This is precisely why most people decide to use an ORM and let if handle all these hassles for you.�
+
+This is a relatively straightforward code but beings to break once you start making changes to the `Customer` table.
+Believe me changes to the tables are very commom, especially when a project is in its nascent stages.
+The moment you decide to rename few columns  or add new columns you need to remember to do a find and replace all occurances of
+those strings in your solution, which is not a very efficient way of doing things.
+This is precisely why most people decide to use an ORM and let if handle all these hassles for you.
 But what if you don't want to use a ORM and at the same time not have this problem ?
 
 What can Spry do ?
