@@ -1,23 +1,23 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.SqlClient;
+using NUnit.Framework;
 using Spry.Tests.Dto;
 
 namespace Spry.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class RepositoryTest : BaseTest
     {
         private readonly TestConnectionFactory _connectionFactory = new TestConnectionFactory();
         private CustomerRepository _customerRepository;
 
-        [TestInitialize]
+        [SetUp]
         public void TestMethodInitialize()
         {
             _customerRepository = new CustomerRepository(_connectionFactory);
         }
 
-        [TestMethod]
+        [Test]
         public void Insert_CheckOutputIdentity()
         {
             var customer = new Customer
@@ -31,7 +31,7 @@ namespace Spry.Tests
             Assert.IsTrue(customer.CustomerId > 0);
         }
 
-        [TestMethod]
+        [Test]
         public void InnerJoin_CheckInnerJoin()
         {
             var customer = new Customer
@@ -61,7 +61,7 @@ namespace Spry.Tests
             Assert.AreEqual(customer.Address.LineOne, savedCustomer.Address.LineOne);
         }
 
-        [TestMethod]
+        [Test]
         public void Insert_CheckOutputInserted()
         {
             var customer = new Customer
@@ -82,7 +82,7 @@ namespace Spry.Tests
             Assert.IsTrue(customer.CustomerId > 0);
         }
 
-        [TestMethod]
+        [Test]
         public void Update_CheckUpdated()
         {
             var customer = new Customer
@@ -102,7 +102,7 @@ namespace Spry.Tests
             Assert.AreEqual(customer.Name, updatedCustomer.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateColumInWhereClause_CheckUpdated()
         {
             var customer = new Customer
@@ -123,7 +123,7 @@ namespace Spry.Tests
             Assert.AreEqual(newName, updatedCustomer.Name);
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteCustomer_CheckDeleted()
         {
             var customer = new Customer
@@ -138,7 +138,7 @@ namespace Spry.Tests
             Assert.IsTrue(deleted);
         }
 
-        [TestCleanup]
+        [Test]
         public void CleanUp()
         {
             using (var connection = _connectionFactory.CreateConnection())
@@ -148,8 +148,7 @@ namespace Spry.Tests
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [Test]
         public void SqlInjection_InWhereColumnCheckThrowsException()
         {
             var customer = new Customer
@@ -159,11 +158,10 @@ namespace Spry.Tests
 
             customer = _customerRepository.Read(customer.CustomerId);
 
-            _customerRepository.UpdateSqlInjection(customer.CustomerId, "Customer");
+            Assert.Throws(typeof(SqlException), () => _customerRepository.UpdateSqlInjection(customer.CustomerId, "Customer"));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(SqlException))]
+        [Test]
         public void SqlInjection_InParameterValueCheckThrowsException()
         {
             var customer = new Customer
@@ -173,7 +171,7 @@ namespace Spry.Tests
 
             customer = _customerRepository.Read(customer.CustomerId);
 
-            _customerRepository.Update(customer.CustomerId, ";DELETE FROM dbo.Customer; /*", DateTime.Today);
+            Assert.Throws(typeof(SqlException), () => _customerRepository.Update(customer.CustomerId, ";DELETE FROM dbo.Customer; /*", DateTime.Today));
         }
     }
 }
