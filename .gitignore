@@ -12,3 +12,4 @@
 *.nupkg
 /packages
 /.vs/Spry/v15
+*.suo

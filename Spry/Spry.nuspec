@@ -10,11 +10,11 @@
     <projectUrl>https://github.com/vigneshmsft/Spry/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Spry - fluent CRUD queries using Dapper</description>
-    <releaseNotes>v1.0.3 minor bug fix - not randomizing parameter name.</releaseNotes>
-    <copyright>Copyright © 2017</copyright>
+    <releaseNotes>v1.0.4 upgrading to .NET Standard.</releaseNotes>
+    <copyright>Copyright © 2019</copyright>
     <tags>dapper spry database micro-orm orm sql-server sql query-builder fluent-query-builder query dapper-extensions</tags>
     <dependencies>
-      <dependency id="Dapper" version="1.50.2" />
+      <dependency id="Dapper" version="1.50.5" />
     </dependencies>
   </metadata>
 </package>
