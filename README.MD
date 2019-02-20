@@ -1,6 +1,8 @@
 Spry - a simple CRUD query builder extension for Dapper
 =======================================================
 
+[![Build status](https://dev.azure.com/vigneshmsft/Spry/_apis/build/status/Spry-CI)](https://dev.azure.com/vigneshmsft/Spry/_build/latest?definitionId=3)
+
 What is Spry
 ------------
 [Spry](https://www.nuget.org/packages/Spry) is a simple .NET library which allows you to write fluent CRUD queries 
