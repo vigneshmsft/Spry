@@ -11,5 +11,6 @@
 /TestResults
 *.nupkg
 /packages
-/.vs/Spry/v15
+/.vs/
+/.vs/**/
 *.suo
