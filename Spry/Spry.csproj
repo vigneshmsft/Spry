@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard20</TargetFramework>
-    <Version>1.0.4</Version>
+    <Version>1.0.6</Version>
     <Authors>Vignesh.N</Authors>
-    <PackageLicenseUrl>https://github.com/vigneshmsft/Spry/blob/master/LICENSE</PackageLicenseUrl>
+    <License>https://github.com/vigneshmsft/Spry/blob/master/LICENSE</License>
     <PackageProjectUrl>https://github.com/vigneshmsft/Spry</PackageProjectUrl>
     <RepositoryUrl>https://github.com/vigneshmsft/Spry</RepositoryUrl>
     <PackageTags>dapper spry database micro-orm orm sql-server sql query-builder fluent-query-builder query dapper-extensions</PackageTags>
     <Description>Spry - fluent CRUD queries using Dapper</Description>
-    <PackageReleaseNotes>v1.0.4 updating to .NET Standard.</PackageReleaseNotes>
+    <PackageReleaseNotes>v1.0.6</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
