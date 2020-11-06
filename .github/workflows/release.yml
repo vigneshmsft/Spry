@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish_nuget:
+    if: ${{ github.event.release.target_commitish == 'master' && !github.event.release.draft}}
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout Repository
+
+    - name: Use .NET Core 3.1.301
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+
+    - name: dotnet restore
+      run: dotnet restore /nologo
+
+    - name: dotnet build & pack
+      run: |
+        dotnet build -c Release --no-restore --nologo
+        dotnet pack Spry/Spry.csproj -c Release --no-build --nologo -o package
+    
+    - name: dotnet push to NuGet
+      working-directory: package
+      run: | 
+        dotnet nuget push ${PACKAGE_NAME} --api-key ${NUGET_API_KEY} --source https://api.nuget.org/v3/index.json
+      env:
+        PACKAGE_NAME: ${{ format('Spry.{0}.nupkg', github.event.release.tag_name) }}
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
